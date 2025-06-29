@@ -8,14 +8,14 @@ const Button = ({
   loading = false,
   fullWidth = false,
   startIcon,
-  endIcon, // Make sure this is here
+  endIcon,
   onClick,
   type = "button",
   className = "",
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap";
 
   const variants = {
     primary:
@@ -33,10 +33,10 @@ const Button = ({
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-sm",
-    lg: "px-6 py-3 text-base",
-    xl: "px-8 py-4 text-lg",
+    sm: "px-2 py-1 text-xs sm:px-3 sm:py-1.5 sm:text-sm",
+    md: "px-3 py-1.5 text-sm sm:px-4 sm:py-2",
+    lg: "px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base",
+    xl: "px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg",
   };
 
   const classes = `
@@ -47,12 +47,18 @@ const Button = ({
     ${className}
   `.trim();
 
+  const handleClick = (e) => {
+    if (!disabled && !loading && onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <button
       type={type}
       className={classes}
       disabled={disabled || loading}
-      onClick={onClick}
+      onClick={handleClick}
       {...props}
     >
       {loading && (
@@ -76,9 +82,11 @@ const Button = ({
           />
         </svg>
       )}
-      {!loading && startIcon && <span className="mr-2">{startIcon}</span>}
-      {children}
-      {!loading && endIcon && <span className="ml-2">{endIcon}</span>}
+      {!loading && startIcon && (
+        <span className="mr-1 sm:mr-2">{startIcon}</span>
+      )}
+      <span className="truncate">{children}</span>
+      {!loading && endIcon && <span className="ml-1 sm:ml-2">{endIcon}</span>}
     </button>
   );
 };

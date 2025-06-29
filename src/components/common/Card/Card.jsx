@@ -3,7 +3,7 @@ import React from "react";
 const Card = ({
   children,
   className = "",
-  padding = "p-6",
+  padding = "p-4 sm:p-6",
   shadow = "shadow-md",
   rounded = "rounded-lg",
   hover = false,
